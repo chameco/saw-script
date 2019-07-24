@@ -2153,6 +2153,12 @@ primitives = Map.fromList
     [ "Use the approxmc solver to approximate the number of solutions to the"
     , "CNF representation of the given Term."
     ]
+
+  , prim "bv_forall"  "Term -> TopLevel Term"
+    (pureVal bv_forall)
+    Experimental
+    [ "Universally quantify over the given predicate over bitvectors"
+    ]
   ]
 
   where

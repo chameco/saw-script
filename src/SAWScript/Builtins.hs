@@ -17,6 +17,7 @@ Stability   : provisional
 {-# LANGUAGE PatternGuards #-}
 {-# LANGUAGE DoAndIfThenElse #-}
 {-# LANGUAGE NondecreasingIndentation #-}
+{-# LANGUAGE LambdaCase #-}
 
 module SAWScript.Builtins where
 
@@ -1349,3 +1350,12 @@ approxmc t = do
   case msg of
     [l] -> io $ putStrLn l
     _ -> fail $ "Garbled result from approxmc\n\n" ++ out
+
+bv_forall :: TypedTerm -> TopLevel TypedTerm
+bv_forall (ttTerm -> body) = do
+  sc <- getSharedContext
+  liftIO $ scTypeOf sc body >>= \case
+    (unwrapTermF -> Pi _ dom _) -> do
+      w <- scNat sc =<< asBitvectorType dom
+      mkTypedTerm sc =<< scBvForall sc w body
+    _ -> fail "bv_forall: attempt to quantify over non-function term"
