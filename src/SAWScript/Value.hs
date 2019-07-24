@@ -367,7 +367,7 @@ data TopLevelRO =
   { roSharedContext :: SharedContext
   , roJavaCodebase  :: JSS.Codebase
   , roOptions       :: Options
-  , roHandleAlloc   :: Crucible.HandleAllocator RealWorld
+  , roHandleAlloc   :: Crucible.HandleAllocator
   , roPosition      :: SS.Pos
   , roProxy         :: AIGProxy
   }
@@ -432,7 +432,7 @@ printOutTop v s =
     do opts <- getOptions
        io $ printOutFn opts v s
 
-getHandleAlloc :: TopLevel (Crucible.HandleAllocator RealWorld)
+getHandleAlloc :: TopLevel Crucible.HandleAllocator
 getHandleAlloc = TopLevel (asks roHandleAlloc)
 
 getTopLevelRO :: TopLevel TopLevelRO

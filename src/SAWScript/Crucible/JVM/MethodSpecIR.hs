@@ -144,7 +144,7 @@ data JVMCrucibleContext =
   , _jccCodebase       :: CB.Codebase
   , _jccJVMContext     :: CJ.JVMContext
   , _jccBackend        :: Sym -- This is stored inside field _ctxSymInterface of Crucible.SimContext; why do we need another one?
-  , _jccHandleAllocator :: Crucible.HandleAllocator RealWorld
+  , _jccHandleAllocator :: Crucible.HandleAllocator
   }
 
 makeLenses ''JVMCrucibleContext

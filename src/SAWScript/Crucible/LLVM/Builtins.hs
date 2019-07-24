@@ -1518,7 +1518,7 @@ crucible_declare_ghost_state ::
   TopLevel Value
 crucible_declare_ghost_state _bic _opt name =
   do allocator <- getHandleAlloc
-     global <- liftIO (liftST (Crucible.freshGlobalVar allocator (Text.pack name) knownRepr))
+     global <- liftIO (Crucible.freshGlobalVar allocator (Text.pack name) knownRepr)
      return (VGhostVar global)
 
 crucible_ghost_value ::
