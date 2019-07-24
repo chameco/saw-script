@@ -105,18 +105,18 @@ type instance MS.MethodId (CL.LLVM _) = LLVMMethodId
 --------------------------------------------------------------------------------
 -- *** LLVMAllocSpec
 
-data LLVMAllocSpec =
+data LLVMAllocSpec arch =
   LLVMAllocSpec
     { _allocSpecMut   :: CL.Mutability
     , _allocSpecType  :: CL.MemType
-    , _allocSpecBytes :: CL.Bytes
+    , _allocSpecBytes :: MS.SetupValue (CL.LLVM arch)
     , _allocSpecLoc   :: ProgramLoc
     }
-  deriving (Eq, Show)
+  deriving Show
 
 makeLenses ''LLVMAllocSpec
 
-type instance MS.AllocSpec (CL.LLVM _) = LLVMAllocSpec
+type instance MS.AllocSpec (CL.LLVM arch) = LLVMAllocSpec arch
 
 mutIso :: Iso' CL.Mutability Bool
 mutIso =
@@ -128,7 +128,7 @@ mutIso =
       True -> CL.Mutable
       False -> CL.Immutable)
 
-isMut :: Lens' LLVMAllocSpec Bool
+isMut :: Lens' (LLVMAllocSpec arch) Bool
 isMut = allocSpecMut . mutIso
 
 --------------------------------------------------------------------------------
@@ -236,6 +236,14 @@ ppPointsTo (LLVMPointsTo _loc ptr val) =
 
 instance PPL.Pretty (LLVMPointsTo arch) where
   pretty = ppPointsTo
+
+--------------------------------------------------------------------------------
+-- ** Initialized
+
+type instance MS.Initialized (CL.LLVM arch) = LLVMInitialized arch
+
+data LLVMInitialized arch =
+  LLVMInitialized ProgramLoc (MS.SetupValue (CL.LLVM arch)) (MS.SetupValue (CL.LLVM arch))
 
 --------------------------------------------------------------------------------
 -- ** ???

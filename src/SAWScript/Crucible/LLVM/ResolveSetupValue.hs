@@ -83,7 +83,7 @@ type LLVMPtr wptr = Crucible.LLVMPtr Sym wptr
 -- corresponding to the given field name.
 resolveSetupValueInfo ::
   LLVMCrucibleContext wptr            {- ^ crucible context  -} ->
-  Map AllocIndex LLVMAllocSpec {- ^ allocation types  -} ->
+  Map AllocIndex (LLVMAllocSpec arch) {- ^ allocation types  -} ->
   Map AllocIndex Crucible.Ident   {- ^ allocation type names -} ->
   SetupValue (Crucible.LLVM arch)                      {- ^ pointer to struct -} ->
   L.Info                          {- ^ field index       -}
@@ -105,7 +105,7 @@ resolveSetupValueInfo cc env nameEnv v =
 -- corresponding to the given field name.
 resolveSetupFieldIndex ::
   LLVMCrucibleContext arch {- ^ crucible context  -} ->
-  Map AllocIndex LLVMAllocSpec {- ^ allocation types  -} ->
+  Map AllocIndex (LLVMAllocSpec arch) {- ^ allocation types  -} ->
   Map AllocIndex Crucible.Ident   {- ^ allocation type names -} ->
   SetupValue (Crucible.LLVM arch) {- ^ pointer to struct -} ->
   String                          {- ^ field name        -} ->
@@ -129,7 +129,7 @@ resolveSetupFieldIndex cc env nameEnv v n =
 resolveSetupFieldIndexOrFail ::
   MonadFail m =>
   LLVMCrucibleContext arch {- ^ crucible context  -} ->
-  Map AllocIndex LLVMAllocSpec {- ^ allocation types  -} ->
+  Map AllocIndex (LLVMAllocSpec arch) {- ^ allocation types  -} ->
   Map AllocIndex Crucible.Ident   {- ^ allocation type names -} ->
   SetupValue (Crucible.LLVM arch) {- ^ pointer to struct -} ->
   String                          {- ^ field name        -} ->
@@ -152,7 +152,7 @@ resolveSetupFieldIndexOrFail cc env nameEnv v n =
 typeOfSetupValue ::
   MonadFail m =>
   LLVMCrucibleContext arch ->
-  Map AllocIndex LLVMAllocSpec ->
+  Map AllocIndex (LLVMAllocSpec arch) ->
   Map AllocIndex Crucible.Ident ->
   SetupValue (Crucible.LLVM arch) ->
   m Crucible.MemType
@@ -163,7 +163,7 @@ typeOfSetupValue cc env nameEnv val =
 typeOfSetupValue' :: forall m arch.
   MonadFail m =>
   LLVMCrucibleContext arch ->
-  Map AllocIndex LLVMAllocSpec ->
+  Map AllocIndex (LLVMAllocSpec arch) ->
   Map AllocIndex Crucible.Ident ->
   SetupValue (Crucible.LLVM arch) ->
   m Crucible.MemType
@@ -256,7 +256,7 @@ resolveSetupVal :: forall arch.
   Crucible.HasPtrWidth (Crucible.ArchWidth arch) =>
   LLVMCrucibleContext arch ->
   Map AllocIndex (LLVMPtr (Crucible.ArchWidth arch)) ->
-  Map AllocIndex LLVMAllocSpec ->
+  Map AllocIndex (LLVMAllocSpec arch) ->
   Map AllocIndex Crucible.Ident ->
   SetupValue (Crucible.LLVM arch)             ->
   IO LLVMVal

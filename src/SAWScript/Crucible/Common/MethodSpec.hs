@@ -298,6 +298,9 @@ type family ExtType ext :: Type
 -- | The type of points-to assertions
 type family PointsTo ext :: Type
 
+-- | The type of initialization assertions
+type family Initialized ext :: Type
+
 --------------------------------------------------------------------------------
 -- *** StateSpec
 
@@ -322,6 +325,8 @@ data StateSpec ext = StateSpec
     -- ^ symbolic pointers
   , _csPointsTos     :: [PointsTo ext]
     -- ^ points-to statements
+  , _csInitialized   :: [Initialized ext]
+    -- ^ initialized assertions
   , _csConditions    :: [SetupCondition ext]
     -- ^ equality, propositions, and ghost-variable conditions
   , _csFreshVars     :: [TypedTerm]
@@ -337,6 +342,7 @@ initialStateSpec =  StateSpec
   { _csAllocs        = Map.empty
   , _csFreshPointers = Map.empty -- TODO: this is LLVM-specific
   , _csPointsTos     = []
+  , _csInitialized   = []
   , _csConditions    = []
   , _csFreshVars     = []
   , _csVarTypeNames  = Map.empty

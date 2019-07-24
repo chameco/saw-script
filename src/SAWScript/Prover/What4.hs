@@ -6,6 +6,8 @@
 
 module SAWScript.Prover.What4 where
 
+import Text.PrettyPrint.ANSI.Leijen
+
 import qualified Data.Vector as V
 import           Control.Monad(filterM)
 import           Data.Maybe (catMaybes)

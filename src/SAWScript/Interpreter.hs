@@ -1769,7 +1769,7 @@ primitives = Map.fromList
     , "read-only regions."
     ]
 
-  , prim "crucible_alloc_with_size" "Int -> LLVMType -> CrucibleSetup SetupValue"
+  , prim "crucible_alloc_with_size" "SetupValue -> LLVMType -> CrucibleSetup SetupValue"
     (bicVal crucible_alloc_with_size)
     Experimental
     [ "Like `crucible_alloc`, but with a user-specified size (given in bytes)."
@@ -1812,6 +1812,11 @@ primitives = Map.fromList
     , "between the pointer type and the value type. This may be useful when"
     , "reading or writing a prefix of larger array, for example."
     ]
+
+  , prim "crucible_initialized" "SetupValue -> SetupValue -> CrucibleSetup ()"
+    (bicVal crucible_initialized)
+    Current
+    []
 
   , prim "crucible_equal" "SetupValue -> SetupValue -> CrucibleSetup ()"
     (bicVal crucible_equal)
