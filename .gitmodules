@@ -6,7 +6,8 @@
 	url = https://github.com/GaloisInc/aig.git
 [submodule "deps/crucible"]
 	path = deps/crucible
-	url = https://github.com/GaloisInc/crucible.git
+	url = https://github.com/chameco/crucible.git
+        branch = temp-forall-fix
 [submodule "deps/cryptol-verifier"]
 	path = deps/cryptol-verifier
 	url = https://github.com/GaloisInc/cryptol-verifier.git
@@ -30,13 +31,16 @@
 	url = https://github.com/GaloisInc/parameterized-utils.git
 [submodule "deps/saw-core-aig"]
 	path = deps/saw-core-aig
-	url = https://github.com/GaloisInc/saw-core-aig.git
+	url = https://github.com/chameco/saw-core-aig.git
+        branch = bitvector-forall
 [submodule "deps/saw-core-sbv"]
 	path = deps/saw-core-sbv
-	url = https://github.com/GaloisInc/saw-core-sbv.git
+	url = https://github.com/chameco/saw-core-sbv.git
+        branch = bitvector-forall
 [submodule "deps/saw-core"]
 	path = deps/saw-core
-	url = https://github.com/GaloisInc/saw-core.git
+	url = https://github.com/chameco/saw-core.git
+        branch = bitvector-forall
 [submodule "deps/flexdis86"]
 	path = deps/flexdis86
 	url = https://github.com/GaloisInc/flexdis86.git
@@ -51,7 +55,8 @@
 	url = https://github.com/GaloisInc/dwarf.git
 [submodule "deps/saw-core-what4"]
 	path = deps/saw-core-what4
-	url = https://github.com/GaloisInc/saw-core-what4.git
+	url = https://github.com/chameco/saw-core-what4.git
+        branch = bitvector-forall
 [submodule "deps/cryptol-specs"]
 	path = deps/cryptol-specs
 	url = https://github.com/galoisinc/cryptol-specs
