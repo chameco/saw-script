@@ -1352,10 +1352,15 @@ approxmc t = do
     _ -> fail $ "Garbled result from approxmc\n\n" ++ out
 
 bv_forall :: TypedTerm -> TopLevel TypedTerm
-bv_forall (ttTerm -> body) = do
+bv_forall (ttTerm -> predicate) = do
   sc <- getSharedContext
-  liftIO $ scTypeOf sc body >>= \case
-    (unwrapTermF -> Pi _ dom _) -> do
-      w <- scNat sc =<< asBitvectorType dom
-      mkTypedTerm sc =<< scBvForall sc w body
-    _ -> fail "bv_forall: attempt to quantify over non-function term"
+  let go :: Term -> Term -> IO Term
+      go term (unwrapTermF -> Pi _ dom cod)
+        | Lambda n ty body <- unwrapTermF term = do
+            w <- scNat sc =<< asBitvectorType dom
+            scBvForall sc w
+              =<< Unshared . Lambda n ty
+              <$> go body cod
+        | otherwise = fail "bv_forall: ill-typed term"
+      go term _ = pure term
+  liftIO $ scTypeOf sc predicate >>= go predicate >>= mkTypedTerm sc
